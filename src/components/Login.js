@@ -33,7 +33,7 @@ function Login({location, history}) {
 		[],
 		{
 			headers: {
-				'Access-Control-Allow-Origin': '*', // 얘를 적으면 preflight가 날라가는데, 본요청에선 cors가 나옴
+				// 'Access-Control-Allow-Origin': '*', // 얘를 적으면 preflight가 날라가는데, 본요청에선 cors가 나옴
 				'Content-Type': 'application/x-www-form-urlencoded'
 			}
 		})

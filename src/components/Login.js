@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect } from "react";
 import {REDIRECT_URI, REST_API_KEY} from "./Home";
 
@@ -12,18 +13,38 @@ function Login({location, history}) {
 		client_secret: 'LNKXo86CL50cISuRvu3zQKexYwQbfaVQ'
 	};
 	
+	const params = new URLSearchParams(postData).toString();
+
+	// ---------- fetch 사용 ----------------------
+	// useEffect(() => {
+	// 	const reqOpt = {
+	// 		method: 'POST',
+	// 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+	// 	};
+
+	// 	fetch(`https://kauth.kakao.com/oauth/token?${params}`, reqOpt)
+	// 	.then(response => response.json())
+	// 	.then(data => console.log(data))
+	// }, [])
+
+	// -------------------- axios 사용 -----------------
+	async function getToken() {
+		const {data} = await axios.post(`https://kauth.kakao.com/oauth/token?${params}`,
+		[],
+		{
+			headers: {
+				'Access-Control-Allow-Origin': '*', // 얘를 적으면 preflight가 날라가는데, 본요청에선 cors가 나옴
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
+		})
+		console.log(data);
+	}
+
 	useEffect(() => {
-		const reqOpt = {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-		};
+		getToken()
+	}, []);
+	// -------------------------------------------------
 
-		const params = new URLSearchParams(postData).toString();
-
-		fetch(`https://kauth.kakao.com/oauth/token?${params}`, reqOpt)
-		.then(response => response.json())
-		.then(data => console.log(data))
-	}, [])
 	
 	return (
 		<>

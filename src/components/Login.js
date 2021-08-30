@@ -10,7 +10,6 @@ function Login({location, history}) {
 		client_id: REST_API_KEY,
 		redirect_uri: REDIRECT_URI,
 		code: code,
-		client_secret: 'LNKXo86CL50cISuRvu3zQKexYwQbfaVQ'
 	};
 	
 	const params = new URLSearchParams(postData).toString();

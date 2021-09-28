@@ -1,12 +1,11 @@
-import axios from "axios";
 import React, { useEffect } from "react";
 import {REDIRECT_URI, KAKAO_REST_API_KEY} from "./config";
 
-function Login({ history }) {
+function LoginKakao({ history }) {
 
 	const code = new URLSearchParams(window.location.search).get('code');
 
-	// ========================== get token ===================
+	// get token
 	const postData = {
 		grant_type: 'authorization_code',
 		client_id: KAKAO_REST_API_KEY,
@@ -15,7 +14,6 @@ function Login({ history }) {
 	};
 	const params = new URLSearchParams(postData).toString();
 
-	// ---------- fetch 사용 ----------------------
 	try {
 	useEffect(() => {
 		const reqOpt = {
@@ -25,7 +23,14 @@ function Login({ history }) {
 
 		fetch(`https://kauth.kakao.com/oauth/token?${params}`, reqOpt)
 		.then(response => response.json())
-		.then(data => console.log(data))
+		.then(data => {
+			window.localStorage.setItem("yw_access", data.access_token)
+			window.localStorage.setItem("yw_refresh", data.refresh_token)
+			console.log(data)
+			// console.log(data.access_token)
+			// console.log(data.refresh_token)
+		})
+		.catch(e => new Error("token error" + e))
 		//에러처리 필요
 		history.push('/main');
 	}, [])
@@ -34,23 +39,6 @@ function Login({ history }) {
 		history.push('/');
 	}
 
-	// -------------------- axios 사용 -----------------
-	// async function getToken() {
-	// 	const {data} = await axios.post(`https://kauth.kakao.com/oauth/token?${params}`,
-	// 	[],
-	// 	{
-	// 		headers: {
-	// 			'Content-Type': 'application/x-www-form-urlencoded'
-	// 		}
-	// 	})
-	// 	console.log(data);
-	// }
-
-	// useEffect(() => {
-	// 	getToken()
-	// }, []);
-	// ==================================================
-	
 	return (
 		<>
 			Login
@@ -62,4 +50,4 @@ function Login({ history }) {
 	);
 }
 
-export default Login;
+export default LoginKakao;

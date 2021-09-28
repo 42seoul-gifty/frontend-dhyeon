@@ -1,4 +1,4 @@
-export const REDIRECT_URI = "http://localhost:3000/login";
+export const REDIRECT_URI = "http://localhost:3000/callback/kakao";
 
 export const KAKAO_REST_API_KEY = "82bc00a056d39582ec6d9aef218f5927";
 export const KAKAO_REQUEST_URL = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=";
